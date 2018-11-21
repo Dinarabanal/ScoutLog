@@ -28,7 +28,7 @@ public class BadgeFragment extends Fragment implements RecyclerViewAdapter.ItemC
   private static final String TAG = "BadgeFragment";
 
 
-  ArrayList<String> images = new ArrayList<String>();
+  ArrayList<String> images = new ArrayList<>();
 
   CircleImageView test;
 
@@ -38,9 +38,7 @@ public class BadgeFragment extends Fragment implements RecyclerViewAdapter.ItemC
     // Inflate the layout for this fragment
     View view = inflater.inflate(R.layout.fragment_badges, container, false);
 
-    //TODO Set up log to initialize images;
 
-    test = view.findViewById(R.id.badges);
 
     RecyclerView recyclerView = view.findViewById(R.id.recycled_badges);
     recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));

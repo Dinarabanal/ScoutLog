@@ -1,8 +1,6 @@
 package edu.cnm.deepdive.scoutlog.view;
 
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -10,41 +8,43 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.ImageButton;
 import edu.cnm.deepdive.scoutlog.R;
-import edu.cnm.deepdive.scoutlog.model.db.ScoutLogDatabase;
-import edu.cnm.deepdive.scoutlog.model.entities.Scout;
 
 
-public class ScoutFragment extends Fragment {
+public class MainFragment extends Fragment{
 
-
-  private static final String TAG = "ScoutFragment";
-
-  public ScoutFragment() {
-  }
+  private ImageButton scoutButton;
+  private ImageButton badgeButton;
+  private View view;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    View view = inflater.inflate(R.layout.fragment_scouts, container, false);
-    FloatingActionButton fab = view.findViewById(R.id.add_scout);
-    fab.setOnClickListener(new OnClickListener() {
-      @Override
-      public void onClick(View v) {
-        switchFragment(new AddScout(),true,"");
-      }
-    });
+    view = inflater.inflate(R.layout.fragment_main, container, false);
+    init();
+
     return view;
   }
 
-  private class InsertTask extends AsyncTask<Scout, Void, Long> {
-
-    @Override
-    protected Long doInBackground(Scout... scouts) {
-      return ScoutLogDatabase.getInstance(getContext()).getScoutDao().insert(scouts[0]);
+  private void init() {
+    scoutButton = view.findViewById(R.id.scout_button);
+    scoutButton.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        switchFragment(new ScoutFragment(), true,"");
     }
+    });
+    badgeButton = view.findViewById(R.id.badge_button);
+    badgeButton.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        switchFragment(new BadgeFragment(),true,"");
+      }
+    });
   }
+
   public void switchFragment(Fragment fragment, boolean useStack, String variant) {
     FragmentManager manager = getFragmentManager();
     String tag = fragment.getClass().getSimpleName() + ((variant != null) ? variant : "");
@@ -58,4 +58,6 @@ public class ScoutFragment extends Fragment {
     }
     transaction.commit();
   }
+
+
 }

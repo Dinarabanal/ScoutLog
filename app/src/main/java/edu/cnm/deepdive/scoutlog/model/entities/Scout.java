@@ -6,35 +6,35 @@ import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
 
-@Entity
-    (
-        indices = {
-            @Index(value = {"last_name", "first_name"}, unique = true)
-        }
+@Entity(indices = {@Index(value =
+    {"last_name", "first_name"}, unique = true)
+})
 
-    )
 public class Scout {
 
+  // @Entity(primaryKeys = {"firstName", "lastName"})
+  // public class User {
+//    public String firstName;
+//    public String lastName;
+//  }
+
   @PrimaryKey(autoGenerate = true)
-  @ColumnInfo(name= "scout_id")
+  @ColumnInfo(name = "scout_id")
   private long id;
-
-  public void setFullName(@NonNull String firstNamex,@NonNull String lastNamex) {
-    firstName = firstNamex;
-    lastName = lastNamex;
-  }
-
   //@NonNull
   @ColumnInfo(name = "last_name", collate = ColumnInfo.NOCASE)
   private String lastName;
-
   //@NonNull
   @ColumnInfo(name = "first_name", collate = ColumnInfo.NOCASE)
   private String firstName;
-
   //@NonNull
   @ColumnInfo(index = true, collate = ColumnInfo.NOCASE)
   private String rank;
+
+  public void setFullName(@NonNull String firstName, @NonNull String lastName) {
+    this.firstName = firstName;
+    this.lastName = lastName;
+  }
 
   public long getId() {
     return id;

@@ -16,8 +16,16 @@ import android.support.annotation.NonNull;
 public class Badge {
 
   @PrimaryKey(autoGenerate = true)
-  @ColumnInfo(name= "badge_name")
+  @ColumnInfo(name= "badge_id")
   private long id;
+
+  public long getId() {
+    return id;
+  }
+
+  public void setId(long id) {
+    this.id = id;
+  }
 
   @NonNull
   @ColumnInfo(name = "badge_name", collate = ColumnInfo.NOCASE)

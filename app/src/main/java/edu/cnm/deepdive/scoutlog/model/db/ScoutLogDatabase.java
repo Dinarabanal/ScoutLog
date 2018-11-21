@@ -4,23 +4,25 @@ import android.arch.persistence.room.Database;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.RoomDatabase;
 import android.content.Context;
+import edu.cnm.deepdive.scoutlog.model.dao.BadgeDao;
 import edu.cnm.deepdive.scoutlog.model.dao.ScoutDao;
+import edu.cnm.deepdive.scoutlog.model.entities.Badge;
 import edu.cnm.deepdive.scoutlog.model.entities.Scout;
 
-@Database(entities = {Scout.class},
+@Database(entities = {Scout.class, Badge.class},
     version = 1,
     exportSchema = false)
-public abstract class ScoutDatabase extends RoomDatabase {
+public abstract class ScoutLogDatabase extends RoomDatabase {
 
   private static final String DATABASE_NAME = "scout_db";
 
-  private static ScoutDatabase instance = null;
+  private static ScoutLogDatabase instance = null;
 
-  public synchronized static ScoutDatabase getInstance(Context context) {
+  public synchronized static ScoutLogDatabase getInstance(Context context) {
 
     if (instance == null) {
       instance = Room.databaseBuilder(context.getApplicationContext(),
-          ScoutDatabase.class,
+          ScoutLogDatabase.class,
           DATABASE_NAME)
 //          .addCallback(new Callback(context.getApplicationContext()))
           .build();
@@ -35,6 +37,8 @@ public abstract class ScoutDatabase extends RoomDatabase {
   }
 
   public abstract ScoutDao getScoutDao();
+
+  public abstract BadgeDao getBadgeDao();
 
 //  private static class Callback extends RoomDatabase.Callback {
 //
@@ -67,7 +71,7 @@ public abstract class ScoutDatabase extends RoomDatabase {
 //
 //    @Override
 //    protected Void doInBackground(Void... voids) {
-//      ScoutDatabase db = getInstance(context);
+//      ScoutLogDatabase db = getInstance(context);
 //     ScoutDao dao = db.getScoutDao();
 //     Scout scout =  new  Scout();
 //     scout.setLastName("Smith");
