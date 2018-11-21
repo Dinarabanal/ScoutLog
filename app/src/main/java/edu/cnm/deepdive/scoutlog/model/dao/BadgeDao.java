@@ -5,6 +5,6 @@ import android.arch.persistence.room.Dao;
 
 @Dao
 
-public interface PickBadge {
+public interface BadgeDao {
 
 }
