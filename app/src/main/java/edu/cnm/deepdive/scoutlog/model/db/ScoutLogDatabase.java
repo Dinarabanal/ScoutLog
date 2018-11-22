@@ -103,7 +103,7 @@ public abstract class ScoutLogDatabase extends RoomDatabase {
 //      scout.setRank("Boy Scout");
 //      scout.setLastName("Butler");
 //      scout.setFirstName("Jamie");
-//      scout.setRank("Bot Scout");
+//      scout.setRank("Boy Scout");
 //
 //      dao.insert(scout);
 //      forgetInstance(context);

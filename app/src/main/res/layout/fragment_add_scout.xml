@@ -27,17 +27,21 @@
 
 
   <RadioGroup
+    android:id="@+id/rank"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content">
     <RadioButton
+      android:id="@+id/cub"
       android:hint="Cub scout"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"/>
     <RadioButton
+      android:id="@+id/boy"
       android:hint="Boy scout"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"/>
     <RadioButton
+      android:id="@+id/eagle"
       android:hint="Eagle scout"
       android:layout_width="wrap_content"
       android:layout_height="wrap_content"/>

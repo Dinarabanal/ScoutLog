@@ -5,6 +5,7 @@ import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
 import android.support.annotation.NonNull;
+import java.util.ArrayList;
 
 @Entity(indices = {@Index(value =
     {"last_name", "first_name"}, unique = true)
@@ -22,14 +23,15 @@ public class Scout {
   @ColumnInfo(name = "scout_id")
   private long id;
   //@NonNull
-  @ColumnInfo(name = "last_name", collate = ColumnInfo.NOCASE)
+  @ColumnInfo(name = "last_name")
   private String lastName;
   //@NonNull
-  @ColumnInfo(name = "first_name", collate = ColumnInfo.NOCASE)
+  @ColumnInfo(name = "first_name")
   private String firstName;
   //@NonNull
-  @ColumnInfo(index = true, collate = ColumnInfo.NOCASE)
+  @ColumnInfo(index = true)
   private String rank;
+
 
   public void setFullName(@NonNull String firstName, @NonNull String lastName) {
     this.firstName = firstName;

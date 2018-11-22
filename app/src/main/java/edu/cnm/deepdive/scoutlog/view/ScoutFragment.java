@@ -38,13 +38,7 @@ public class ScoutFragment extends Fragment {
     return view;
   }
 
-  private class InsertTask extends AsyncTask<Scout, Void, Long> {
 
-    @Override
-    protected Long doInBackground(Scout... scouts) {
-      return ScoutLogDatabase.getInstance(getContext()).getScoutDao().insert(scouts[0]);
-    }
-  }
   public void switchFragment(Fragment fragment, boolean useStack, String variant) {
     FragmentManager manager = getFragmentManager();
     String tag = fragment.getClass().getSimpleName() + ((variant != null) ? variant : "");
