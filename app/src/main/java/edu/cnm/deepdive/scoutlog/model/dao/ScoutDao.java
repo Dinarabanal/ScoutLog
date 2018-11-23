@@ -26,7 +26,7 @@ public interface ScoutDao {
   Scout findByName(String first, String last);
 
   @Insert
-  void insertAll(Scout... Scouts);
+ void  insertAll(Scout... Scouts);
 
   @Delete
   void delete(Scout Scout);

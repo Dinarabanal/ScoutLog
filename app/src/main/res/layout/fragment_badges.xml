@@ -13,9 +13,17 @@
 <EditText
   android:id="@+id/badge_search"
   android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
+  android:layout_height="90dp"
   android:hint="Search by badge:"
   android:paddingBottom="48dp"/>
+
+  <Button
+    android:id="@+id/search_button"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toTopOf="parent"
+    android:text="Search"/>
 
   <ImageView
     android:layout_width="@id/recycled_badges"

@@ -9,15 +9,21 @@ import android.support.annotation.NonNull;
 @Entity
     (
         indices = {
-            @Index(value = {"badge_name"}, unique = true)
+            @Index(value = {"badge_name"})
         }
 
     )
 public class Badge {
 
   @PrimaryKey(autoGenerate = true)
-  @ColumnInfo(name= "badge_id")
+  @ColumnInfo(name = "badge_id")
   private long id;
+  @NonNull
+  @ColumnInfo(name = "badge_name", collate = ColumnInfo.NOCASE)
+  private String badgeName;
+  @ColumnInfo(name = "image_link")
+
+  private String imageLink;
 
   public long getId() {
     return id;
@@ -28,15 +34,19 @@ public class Badge {
   }
 
   @NonNull
-  @ColumnInfo(name = "badge_name", collate = ColumnInfo.NOCASE)
-  private String badge;
+  public String getBadgeName() {
+    return badgeName;
+  }
 
-public String getBadge() {
-  return badge;
-}
+  public void setBadgeName(@NonNull String badgeName) {
+    this.badgeName = badgeName;
+  }
 
+  public String getImageLink() {
+    return imageLink;
+  }
 
-public void setBadge(String badge) {
-  this.badge = badge;
-}
+  public void setImageLink(String imageLink) {
+    this.imageLink = imageLink;
+  }
 }
