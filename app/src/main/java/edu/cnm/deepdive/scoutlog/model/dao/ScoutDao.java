@@ -7,6 +7,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import edu.cnm.deepdive.scoutlog.model.entities.Scout;
+import java.util.ArrayList;
 import java.util.List;
 
 @Dao
@@ -24,6 +25,9 @@ public interface ScoutDao {
   @Query("SELECT * FROM Scout WHERE first_name LIKE :first AND " +
       "last_name LIKE :last LIMIT 1")
   Scout findByName(String first, String last);
+
+  @Query("SELECT * FROM Scout WHERE scout_id =:scoutId")
+  Scout select(long scoutId);
 
   @Insert
  void  insertAll(Scout... Scouts);

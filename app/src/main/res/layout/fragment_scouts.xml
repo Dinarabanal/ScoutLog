@@ -11,9 +11,29 @@
 <TextView
   android:id="@+id/scouts_list"
   android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
+  android:layout_height="wrap_content"/>
 
-  />
+
+  <android.support.v7.widget.RecyclerView
+    android:id="@+id/recycled_scouts"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content"
+    app:layout_constraintRight_toRightOf="parent"
+    app:layout_constraintTop_toBottomOf="parent"
+    app:layout_constraintBottom_toBottomOf="parent"
+    app:layout_constraintLeft_toLeftOf="parent"/>
+
+  <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    app:layout_constraintTop_toTopOf="@id/add_scout"
+    app:layout_constraintBottom_toBottomOf="@id/add_scout"
+    app:layout_constraintRight_toLeftOf="@id/add_scout"
+    android:paddingRight="10dp"
+    android:text="Add a new scout"
+    android:textColor="#aaaaaa"
+    />
+
   <android.support.design.widget.FloatingActionButton
     android:id="@+id/add_scout"
     android:src="@drawable/ic_add"

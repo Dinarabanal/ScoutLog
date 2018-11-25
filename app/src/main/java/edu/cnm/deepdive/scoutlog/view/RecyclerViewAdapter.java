@@ -1,7 +1,6 @@
 package edu.cnm.deepdive.scoutlog.view;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;

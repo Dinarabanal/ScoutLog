@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout
+  xmlns:android="http://schemas.android.com/apk/res/android"
   xmlns:tools="http://schemas.android.com/tools"
   android:layout_width="match_parent"
   android:layout_height="match_parent"
@@ -8,47 +9,59 @@
   android:padding="16dp"
   android:background="#FFF"
   tools:context=".view.AddScout">
-<LinearLayout
-  android:layout_width="wrap_content"
-  android:layout_height="wrap_content"
-  android:orientation="vertical">
 
-  <EditText
-    android:id="@+id/first_name"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:hint="Enter first name:"/>
-
-  <EditText
-    android:id="@+id/last_name"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:hint="Enter last name:"/>
-
-
-  <RadioGroup
-    android:id="@+id/rank"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
-    <RadioButton
-      android:id="@+id/cub"
-      android:hint="Cub scout"
+    <LinearLayout
+      android:orientation="vertical"
       android:layout_width="wrap_content"
-      android:layout_height="wrap_content"/>
-    <RadioButton
-      android:id="@+id/boy"
-      android:hint="Boy scout"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"/>
-    <RadioButton
-      android:id="@+id/eagle"
-      android:hint="Eagle scout"
-      android:layout_width="wrap_content"
-      android:layout_height="wrap_content"/>
-  </RadioGroup>
-</LinearLayout>
+      android:layout_height="wrap_content">
+        <EditText
+          android:id="@+id/first_name"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          android:layout_marginBottom="30dp"
+          android:hint="Enter first name:"
+          tools:layout_editor_absoluteX="0dp" />
 
-  <Button
+        <EditText
+          android:id="@+id/last_name"
+          android:layout_width="139dp"
+          android:layout_height="53dp"
+          android:hint="Enter last name:"
+          android:layout_marginBottom="30dp"
+          tools:layout_editor_absoluteX="0dp"
+          tools:layout_editor_absoluteY="101dp" />
+
+
+        <RadioGroup
+          android:id="@+id/rank"
+          android:layout_width="wrap_content"
+          android:layout_height="wrap_content"
+          tools:layout_editor_absoluteX="2dp"
+          tools:layout_editor_absoluteY="220dp">
+
+            <RadioButton
+              android:id="@+id/cub"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:hint="Cub scout" />
+
+            <RadioButton
+              android:id="@+id/boy"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:hint="Boy scout" />
+
+            <RadioButton
+              android:id="@+id/eagle"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:hint="Eagle scout" />
+        </RadioGroup>
+    </LinearLayout>
+
+
+
+  <de.hdodenhof.circleimageview.CircleImageView
     android:id="@+id/save_button"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintRight_toRightOf="parent"

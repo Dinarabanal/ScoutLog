@@ -13,4 +13,8 @@
     android:layout_height="56dp"
     android:layout_gravity="center"/>
 
+  <TextView
+    android:id="@+id/scouts"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"/>
 </LinearLayout>

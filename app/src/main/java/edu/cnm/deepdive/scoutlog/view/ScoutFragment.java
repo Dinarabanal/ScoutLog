@@ -7,6 +7,8 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -20,28 +22,29 @@ import java.util.List;
 
 
 public class ScoutFragment extends Fragment {
-  TextView scoutList;
 
+  List<Scout> scouts;
+  private ArrayList<String> scoutsInfo = new ArrayList<>();
+  View view;
   private static final String TAG = "ScoutFragment";
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    new GetAllScouts().execute();
   }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
       Bundle savedInstanceState) {
     // Inflate the layout for this fragment
-    View view = inflater.inflate(R.layout.fragment_scouts, container, false);
+    view = inflater.inflate(R.layout.fragment_scouts, container, false);
+    new GetAllScouts().execute();
 
-    scoutList  = view.findViewById(R.id.scouts_list);
     FloatingActionButton fab = view.findViewById(R.id.add_scout);
     fab.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        switchFragment(new AddScout(),true,"");
+        switchFragment(new AddScout(), true, "");
       }
     });
 
@@ -49,23 +52,31 @@ public class ScoutFragment extends Fragment {
     return view;
   }
 
-private class GetAllScouts extends AsyncTask<Void,Void, List<Scout>>{
+  private void initRecycler(View view){
+    RecyclerView recyclerView = view.findViewById(R.id.recycled_scouts);
+    ScoutViewAdapter adapter = new ScoutViewAdapter(scoutsInfo, getContext());
+    recyclerView.setAdapter(adapter);
+    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
-  @Override
-  protected void onPostExecute(List<Scout> scouts) {
-    for(Scout scouter :  scouts){
-      scoutList.append("FirstName: " + scouter.getFirstName() + "\n");
-      scoutList.append("LastName: " + scouter.getLastName() + "\n");
-      scoutList.append("Rank:" + scouter.getRank() + "\n" +"\n");
+  }
+  private class GetAllScouts extends AsyncTask<Void, Void, List<Scout>>{
 
+    @Override
+    protected void onPostExecute(List<Scout> scouts) {
+
+      ScoutFragment.this.scouts = scouts;
+      for(Scout index : scouts){
+        scoutsInfo.add("First Name: " + index.getFirstName() + "\n" + "Last Name: " + index.getLastName() + "\n" + "Rank :" + index.getRank());
+
+      }
+      initRecycler(view);
+    }
+
+    @Override
+    protected List<Scout> doInBackground(Void... voids) {
+      return ScoutLogDatabase.getInstance(getContext()).getScoutDao().getAll();
     }
   }
-
-  @Override
-  protected List<Scout> doInBackground(Void... voids) {
-    return ScoutLogDatabase.getInstance(getContext()).getScoutDao().getAll();
-  }
-}
   public void switchFragment(Fragment fragment, boolean useStack, String variant) {
     FragmentManager manager = getFragmentManager();
     String tag = fragment.getClass().getSimpleName() + ((variant != null) ? variant : "");
@@ -79,4 +90,7 @@ private class GetAllScouts extends AsyncTask<Void,Void, List<Scout>>{
     }
     transaction.commit();
   }
+
+
+
 }

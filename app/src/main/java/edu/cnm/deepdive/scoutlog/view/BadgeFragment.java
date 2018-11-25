@@ -24,7 +24,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 
-public class BadgeFragment extends Fragment implements RecyclerViewAdapter.ItemClickListener {
+public class BadgeFragment extends Fragment implements RecyclerViewAdapter.ItemClickListener{
 
   RecyclerViewAdapter adapter;
 
@@ -53,6 +53,8 @@ public class BadgeFragment extends Fragment implements RecyclerViewAdapter.ItemC
     adapter.setClickListener(this);
     recyclerView.setAdapter(adapter);
     new GetImages().execute();
+
+
     searchText = view.findViewById(R.id.badge_search);
     search = view.findViewById(R.id.search_button);
     search.setOnClickListener(new OnClickListener() {
