@@ -3,6 +3,7 @@ package edu.cnm.deepdive.scoutlog.view;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -24,9 +25,9 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 
-public class BadgeFragment extends Fragment implements RecyclerViewAdapter.ItemClickListener{
+public class BadgeFragment extends Fragment implements BadgeViewAdapter.ItemClickListener{
 
-  RecyclerViewAdapter adapter;
+  BadgeViewAdapter adapter;
 
   private static final String TAG = "BadgeFragment";
 
@@ -37,8 +38,17 @@ public class BadgeFragment extends Fragment implements RecyclerViewAdapter.ItemC
   Badge badge = new Badge();
   EditText searchText;
   String badgeById = "";
+  ArrayList<Long> badgeIds;
 
-
+  @Override
+  public void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    if (getArguments() != null) {
+      Bundle bundle = getArguments();
+      Toast.makeText(getContext(), "Add badges to scout: " + bundle.getString("scout_name"),
+          Toast.LENGTH_SHORT).show();
+    }
+  }
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -49,7 +59,7 @@ public class BadgeFragment extends Fragment implements RecyclerViewAdapter.ItemC
 
     RecyclerView recyclerView = view.findViewById(R.id.recycled_badges);
     recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 4));
-    adapter = new RecyclerViewAdapter(getContext(),images);
+    adapter = new BadgeViewAdapter(getContext(),images);
     adapter.setClickListener(this);
     recyclerView.setAdapter(adapter);
     new GetImages().execute();
@@ -77,7 +87,6 @@ public class BadgeFragment extends Fragment implements RecyclerViewAdapter.ItemC
   public void onItemClick(View view, int position) {
     long x = position +1;
     new QueryById().execute(x);
-
   }
 
   private class GetImages extends AsyncTask<Void, Void, Void>{
@@ -134,7 +143,11 @@ public class BadgeFragment extends Fragment implements RecyclerViewAdapter.ItemC
 
     @Override
     protected void onPostExecute(Badge badge) {
-      Toast.makeText(getContext(), badge.getBadgeName(), Toast.LENGTH_SHORT).show();
+      if (badge == null) {
+        Toast.makeText(getContext(), "No badge found!", Toast.LENGTH_SHORT).show();
+      } else {
+        Toast.makeText(getContext(), badge.getBadgeName(), Toast.LENGTH_SHORT).show();
+      }
     }
 
     @Override
@@ -149,10 +162,9 @@ public class BadgeFragment extends Fragment implements RecyclerViewAdapter.ItemC
 
     @Override
     protected void onPostExecute(Badge badge) {
-      badgeById = badge.getBadgeName();
-      Toast.makeText(getContext(), badgeById, Toast.LENGTH_SHORT).show();
+        badgeById = badge.getBadgeName();
+        Toast.makeText(getContext(), badgeById, Toast.LENGTH_SHORT).show();
     }
-
     @Override
     protected Badge doInBackground(Long... longs) {
       return ScoutLogDatabase.getInstance(getContext()).getBadgeDao().selectById(longs[0]);

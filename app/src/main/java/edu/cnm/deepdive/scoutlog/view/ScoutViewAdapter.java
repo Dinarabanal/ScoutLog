@@ -13,9 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 import edu.cnm.deepdive.scoutlog.R;
 import edu.cnm.deepdive.scoutlog.model.db.ScoutLogDatabase;
 import edu.cnm.deepdive.scoutlog.model.entities.Scout;
+import edu.cnm.deepdive.scoutlog.view.BadgeViewAdapter.ItemClickListener;
 import java.util.ArrayList;
 
 public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.ViewHolder>{
@@ -27,6 +29,7 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
     this.context = context;
   }
 
+  ItemClickListener clickListener;
   ArrayList<String> scoutContents = new ArrayList<>();
   Context context;
 
@@ -49,15 +52,41 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
     return scoutContents.size();
   }
 
-  public class ViewHolder extends RecyclerView.ViewHolder{
+  public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
     TextView scouts;
     LinearLayout linearLayout;
+
     public ViewHolder(View itemView) {
       super(itemView);
       scouts = itemView.findViewById(R.id.scouts);
       linearLayout = itemView.findViewById(R.id.recycled_scouts);
+      itemView.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view) {
+      if (clickListener != null) {
+        clickListener.onItemClick(view, getAdapterPosition());
+      }
     }
   }
+
+  // convenience method for getting data at click position
+  String getItem(int id) {
+    return scoutContents.get(id);
+  }
+
+  // allows clicks events to be caught
+  void setClickListener(ItemClickListener itemClickListener) {
+    this.clickListener = itemClickListener;
+  }
+
+  // parent activity will implement this method to respond to click events
+  public interface ItemClickListener {
+
+    void onItemClick(View view, int position);
+  }
+  
   private class GetAScout extends AsyncTask<Long, Void, Scout>{
 
     @Override

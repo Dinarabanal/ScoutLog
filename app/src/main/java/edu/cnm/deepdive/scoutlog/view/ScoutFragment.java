@@ -14,15 +14,18 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 import edu.cnm.deepdive.scoutlog.R;
 import edu.cnm.deepdive.scoutlog.model.db.ScoutLogDatabase;
+import edu.cnm.deepdive.scoutlog.model.entities.Badge;
 import edu.cnm.deepdive.scoutlog.model.entities.Scout;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class ScoutFragment extends Fragment {
+public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClickListener{
 
+  List<Long> ids;
   List<Scout> scouts;
   private ArrayList<String> scoutsInfo = new ArrayList<>();
   View view;
@@ -56,9 +59,21 @@ public class ScoutFragment extends Fragment {
     RecyclerView recyclerView = view.findViewById(R.id.recycled_scouts);
     ScoutViewAdapter adapter = new ScoutViewAdapter(scoutsInfo, getContext());
     recyclerView.setAdapter(adapter);
+    adapter.setClickListener(this);
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
   }
+
+  @Override
+  public void onItemClick(View view, int position) {
+    Bundle bundle = new Bundle();
+    String scoutName = scouts.get(position).getFirstName();
+    bundle.putString("scout_name", scoutName);
+    BadgeFragment badgeFragment = new BadgeFragment();
+    badgeFragment.setArguments(bundle);
+    switchFragment(badgeFragment,true,"");
+  }
+
   private class GetAllScouts extends AsyncTask<Void, Void, List<Scout>>{
 
     @Override
@@ -67,7 +82,6 @@ public class ScoutFragment extends Fragment {
       ScoutFragment.this.scouts = scouts;
       for(Scout index : scouts){
         scoutsInfo.add("First Name: " + index.getFirstName() + "\n" + "Last Name: " + index.getLastName() + "\n" + "Rank :" + index.getRank());
-
       }
       initRecycler(view);
     }

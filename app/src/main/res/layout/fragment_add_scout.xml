@@ -61,12 +61,13 @@
 
 
 
-  <de.hdodenhof.circleimageview.CircleImageView
-    android:id="@+id/save_button"
-    app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintRight_toRightOf="parent"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-
-    />
+    <de.hdodenhof.circleimageview.CircleImageView
+      android:layout_width="65dp"
+      android:layout_height="65dp"
+      android:src="@drawable/ic_add"
+      android:id="@+id/save_button"
+      app:layout_constraintBottom_toBottomOf="parent"
+      app:layout_constraintRight_toRightOf="parent"
+      app:civ_circle_background_color="#000"
+      />
 </android.support.constraint.ConstraintLayout>

@@ -11,14 +11,14 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import edu.cnm.deepdive.scoutlog.R;
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.ViewHolder> {
+public class BadgeViewAdapter extends RecyclerView.Adapter<BadgeViewAdapter.ViewHolder> {
 
   private ArrayList <String> mData;
   private LayoutInflater mInflater;
   private ItemClickListener mClickListener;
 
   // data is passed into the constructor
-  RecyclerViewAdapter(Context context, ArrayList<String> data) {
+  BadgeViewAdapter(Context context, ArrayList<String> data) {
     this.mInflater = LayoutInflater.from(context);
     this.mData = data;
   }
