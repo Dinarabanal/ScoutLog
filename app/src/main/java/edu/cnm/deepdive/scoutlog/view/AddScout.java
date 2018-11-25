@@ -78,6 +78,11 @@ String stringRank = null;
   private class InsertTask extends AsyncTask<Scout, Void, Long> {
 
     @Override
+    protected void onPostExecute(Long aLong) {
+      Toast.makeText(getContext(), "Scout added!", Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     protected Long doInBackground(Scout... scouts) {
       return ScoutLogDatabase.getInstance(getContext()).getScoutDao().insert(scouts[0]);
     }

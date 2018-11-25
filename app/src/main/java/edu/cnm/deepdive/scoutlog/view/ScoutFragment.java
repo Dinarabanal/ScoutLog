@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class ScoutFragment extends Fragment {
+public class ScoutFragment extends Fragment implements ScoutViewAdapter. {
 
   List<Scout> scouts;
   private ArrayList<String> scoutsInfo = new ArrayList<>();
@@ -66,7 +66,7 @@ public class ScoutFragment extends Fragment {
 
       ScoutFragment.this.scouts = scouts;
       for(Scout index : scouts){
-        scoutsInfo.add("First Name: " + index.getFirstName() + "\n" + "Last Name: " + index.getLastName() + "\n" + "Rank :" + index.getRank());
+        scoutsInfo.add("First Name: " + index.getFirstName() + "\n" + "Last Name: " + index.getLastName() + "\n" + "Rank :" + index.getRank() + "\n\n");
 
       }
       initRecycler(view);

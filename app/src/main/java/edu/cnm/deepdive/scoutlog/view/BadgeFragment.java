@@ -24,7 +24,7 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 
-public class BadgeFragment extends Fragment implements RecyclerViewAdapter.ItemClickListener{
+public class BadgeFragment extends Fragment implements ScoutViewAdapter.ItemClickListener{
 
   RecyclerViewAdapter adapter;
 
