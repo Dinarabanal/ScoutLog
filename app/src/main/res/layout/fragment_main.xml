@@ -11,7 +11,7 @@
     android:id="@+id/badge_button"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="20dp"
+    android:layout_marginBottom="18dp"
     app:layout_constraintBottom_toBottomOf="parent"
     app:layout_constraintRight_toRightOf="parent"
     android:background="@drawable/ic_badges"/>
@@ -27,7 +27,7 @@
 
   <ImageButton
     android:id="@+id/scout_button"
-    android:layout_marginBottom="20dp"
+    android:layout_marginBottom="18dp"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     app:layout_constraintLeft_toLeftOf="parent"

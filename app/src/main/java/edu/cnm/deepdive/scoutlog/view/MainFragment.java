@@ -17,6 +17,7 @@ public class MainFragment extends Fragment{
   private ImageButton scoutButton;
   private ImageButton badgeButton;
   private View view;
+  private String apiKey;
 
   @Override
   public View onCreateView(LayoutInflater inflater, ViewGroup container,

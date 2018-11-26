@@ -15,7 +15,7 @@ import edu.cnm.deepdive.scoutlog.model.entities.Scout;
 
 @Database(entities = {Scout.class, Badge.class},
     version = 1,
-    exportSchema = false)
+    exportSchema = true)
 public abstract class ScoutLogDatabase extends RoomDatabase {
 
   private static final String DATABASE_NAME = "scout_db";

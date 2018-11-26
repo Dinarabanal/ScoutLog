@@ -29,11 +29,13 @@ public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClic
   List<Scout> scouts;
   private ArrayList<String> scoutsInfo = new ArrayList<>();
   View view;
+  ScoutViewAdapter adapter;
   private static final String TAG = "ScoutFragment";
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
+    new GetAllScouts().execute();
   }
 
   @Override
@@ -41,7 +43,6 @@ public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClic
       Bundle savedInstanceState) {
     // Inflate the layout for this fragment
     view = inflater.inflate(R.layout.fragment_scouts, container, false);
-    new GetAllScouts().execute();
 
     FloatingActionButton fab = view.findViewById(R.id.add_scout);
     fab.setOnClickListener(new OnClickListener() {
@@ -57,7 +58,7 @@ public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClic
 
   private void initRecycler(View view){
     RecyclerView recyclerView = view.findViewById(R.id.recycled_scouts);
-    ScoutViewAdapter adapter = new ScoutViewAdapter(scoutsInfo, getContext());
+    adapter = new ScoutViewAdapter(scoutsInfo, getContext());
     recyclerView.setAdapter(adapter);
     adapter.setClickListener(this);
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
