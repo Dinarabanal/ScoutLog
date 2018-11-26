@@ -9,6 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -23,19 +24,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * The type Scout fragment.
+ */
 public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClickListener{
 
-  List<Long> ids;
-  List<Scout> scouts;
+  private List<Long> ids;
+  private List<Scout> scouts;
   private ArrayList<String> scoutsInfo = new ArrayList<>();
-  View view;
-  ScoutViewAdapter adapter;
+  private View view;
+  private ScoutViewAdapter adapter;
   private static final String TAG = "ScoutFragment";
+  RecyclerView recyclerView;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     new GetAllScouts().execute();
+
   }
 
   @Override
@@ -43,7 +49,7 @@ public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClic
       Bundle savedInstanceState) {
     // Inflate the layout for this fragment
     view = inflater.inflate(R.layout.fragment_scouts, container, false);
-
+    getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ScoutFragment());
     FloatingActionButton fab = view.findViewById(R.id.add_scout);
     fab.setOnClickListener(new OnClickListener() {
       @Override
@@ -57,11 +63,11 @@ public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClic
   }
 
   private void initRecycler(View view){
-    RecyclerView recyclerView = view.findViewById(R.id.recycled_scouts);
-    adapter = new ScoutViewAdapter(scoutsInfo, getContext());
-    recyclerView.setAdapter(adapter);
-    adapter.setClickListener(this);
+    recyclerView = view.findViewById(R.id.recycled_scouts);
     recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+    adapter = new ScoutViewAdapter(scoutsInfo, getContext());
+    adapter.setClickListener(this);
+    adapter.notifyDataSetChanged();
 
   }
 
@@ -85,6 +91,8 @@ public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClic
         scoutsInfo.add("First Name: " + index.getFirstName() + "\n" + "Last Name: " + index.getLastName() + "\n" + "Rank :" + index.getRank());
       }
       initRecycler(view);
+      recyclerView.setAdapter(adapter);
+
     }
 
     @Override
@@ -92,6 +100,15 @@ public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClic
       return ScoutLogDatabase.getInstance(getContext()).getScoutDao().getAll();
     }
   }
+
+  /**
+   * Switch fragment.
+   *
+   * @param fragment the fragment
+   * @param useStack the use stack
+   * @param variant the variant
+   * switches between fragments with goiing bcak to the main activity
+   */
   public void switchFragment(Fragment fragment, boolean useStack, String variant) {
     FragmentManager manager = getFragmentManager();
     String tag = fragment.getClass().getSimpleName() + ((variant != null) ? variant : "");

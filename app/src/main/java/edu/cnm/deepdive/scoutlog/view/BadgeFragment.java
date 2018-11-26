@@ -31,14 +31,11 @@ public class BadgeFragment extends Fragment implements BadgeViewAdapter.ItemClic
 
   private static final String TAG = "BadgeFragment";
 
-  ArrayList<String> names = new ArrayList<>();
   ArrayList<String> images = new ArrayList<>();
-  String badgeSearch = "";
   Button search;
   Badge badge = new Badge();
   EditText searchText;
   String badgeById = "";
-  ArrayList<Long> badgeIds;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {

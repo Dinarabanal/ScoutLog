@@ -20,18 +20,31 @@ import edu.cnm.deepdive.scoutlog.model.entities.Scout;
 import edu.cnm.deepdive.scoutlog.view.BadgeViewAdapter.ItemClickListener;
 import java.util.ArrayList;
 
+/**
+ * The type Scout view adapter.
+ */
 public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.ViewHolder>{
 
   private static final String TAG = "ScoutViewAdapter";
 
+  /**
+   * Instantiates a new Scout view adapter.
+   *
+   * @param scoutContents the scout contents
+   * @param context the context
+   */
   public ScoutViewAdapter(ArrayList<String> scoutContents, Context context) {
     this.scoutContents = scoutContents;
     this.context = context;
   }
 
-  ItemClickListener clickListener;
-  ArrayList<String> scoutContents = new ArrayList<>();
-  Context context;
+
+  private  ItemClickListener clickListener;
+  private ArrayList<String> scoutContents = new ArrayList<>();
+  private Context context;
+
+
+
 
   @NonNull
   @Override
@@ -52,10 +65,25 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
     return scoutContents.size();
   }
 
+  /**
+   * The type View holder.
+   */
   public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+
+    /**
+     * The Scouts.
+     */
     TextView scouts;
+    /**
+     * The Linear layout.
+     */
     LinearLayout linearLayout;
 
+    /**
+     * Instantiates a new View holder.
+     *
+     * @param itemView the item view
+     */
     public ViewHolder(View itemView) {
       super(itemView);
       scouts = itemView.findViewById(R.id.scouts);
@@ -71,32 +99,41 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
     }
   }
 
-  // convenience method for getting data at click position
+  /**
+   * Gets item.
+   *
+   * @param id the id
+   * @return the item
+   */
+// convenience method for getting data at click position
   String getItem(int id) {
     return scoutContents.get(id);
   }
 
-  // allows clicks events to be caught
+  /**
+   * Sets click listener.
+   *
+   * @param itemClickListener the item click listener
+   */
+// allows clicks events to be caught
   void setClickListener(ItemClickListener itemClickListener) {
     this.clickListener = itemClickListener;
   }
 
-  // parent activity will implement this method to respond to click events
+  /**
+   * The interface Item click listener.
+   */
+// parent activity will implement this method to respond to click events
   public interface ItemClickListener {
 
+    /**
+     * On item click.
+     *
+     * @param view the view
+     * @param position the position
+     */
     void onItemClick(View view, int position);
   }
   
-  private class GetAScout extends AsyncTask<Long, Void, Scout>{
 
-    @Override
-    protected void onPostExecute(Scout scout) {
-
-    }
-
-    @Override
-    protected Scout doInBackground(Long... longs) {
-      return ScoutLogDatabase.getInstance(context).getScoutDao().select(longs[0]);
-    }
-  }
 }

@@ -13,6 +13,10 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import edu.cnm.deepdive.scoutlog.R;
 
 
+/**
+ * The  Main fragment.
+ *
+ */
 public class MainFragment extends Fragment{
 
   private CircleImageView scoutButton;
@@ -47,6 +51,14 @@ public class MainFragment extends Fragment{
     });
   }
 
+  /**
+   * Switch fragment.
+   *
+   * @param fragment the fragment
+   * @param useStack the use stack
+   * @param variant the variant
+   * switches between fragments without going back to the main fragment.
+   */
   public void switchFragment(Fragment fragment, boolean useStack, String variant) {
     FragmentManager manager = getFragmentManager();
     String tag = fragment.getClass().getSimpleName() + ((variant != null) ? variant : "");

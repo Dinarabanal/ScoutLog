@@ -11,13 +11,25 @@ import de.hdodenhof.circleimageview.CircleImageView;
 import edu.cnm.deepdive.scoutlog.R;
 import java.util.ArrayList;
 
+/**
+ * The type Badge view adapter.
+ * adds
+ *
+ */
 public class BadgeViewAdapter extends RecyclerView.Adapter<BadgeViewAdapter.ViewHolder> {
 
   private ArrayList <String> mData;
   private LayoutInflater mInflater;
   private ItemClickListener mClickListener;
 
-  // data is passed into the constructor
+  /**
+   * Instantiates a new Badge view adapter.
+   *
+   * @param context the context
+   * @param data the data
+   *
+   */
+// data is passed into the constructor
   BadgeViewAdapter(Context context, ArrayList<String> data) {
     this.mInflater = LayoutInflater.from(context);
     this.mData = data;
@@ -43,11 +55,23 @@ public class BadgeViewAdapter extends RecyclerView.Adapter<BadgeViewAdapter.View
     return mData.size();
   }
 
-  // stores and recycles views as they are scrolled off screen
+  /**
+   * The type View holder.
+   */
+// stores and recycles views as they are scrolled off screen
   public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
+    /**
+     * The My image view.
+     * image created
+     */
     CircleImageView myImageView;
 
+    /**
+     * Instantiates a new View holder.
+     *
+     * @param itemView the item view
+     */
     ViewHolder(View itemView) {
       super(itemView);
       myImageView = itemView.findViewById(R.id.badges);
@@ -62,19 +86,39 @@ public class BadgeViewAdapter extends RecyclerView.Adapter<BadgeViewAdapter.View
     }
   }
 
-  // convenience method for getting data at click position
+  /**
+   * Gets item.
+   *
+   * @param id the id
+   * @return the item
+   */
+// convenience method for getting data at click position
   String getItem(int id) {
     return mData.get(id);
   }
 
-  // allows clicks events to be caught
+  /**
+   * Sets click listener.
+   *
+   * @param itemClickListener the item click listener
+   */
+// allows clicks events to be caught
   void setClickListener(ItemClickListener itemClickListener) {
     this.mClickListener = itemClickListener;
   }
 
-  // parent activity will implement this method to respond to click events
+  /**
+   * The interface Item click listener.
+   */
+// parent activity will implement this method to respond to click events
   public interface ItemClickListener {
 
+    /**
+     * On item click.
+     *
+     * @param view the view
+     * @param position the position
+     */
     void onItemClick(View view, int position);
   }
 }

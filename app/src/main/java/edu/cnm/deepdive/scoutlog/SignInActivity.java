@@ -16,8 +16,15 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
 import edu.cnm.deepdive.scoutlog.view.MainActivity;
 
+/**
+ * The type Sign in activity.
+ */
 public class SignInActivity extends AppCompatActivity {
   private static final int REQUEST_CODE = 1010;
+  /**
+   * The Sign in.
+   * add the
+   */
   SignInButton signIn;
   @Override
   protected void onCreate(Bundle savedInstanceState) {
