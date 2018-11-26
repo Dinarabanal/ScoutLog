@@ -26,6 +26,8 @@ public class SignInActivity extends AppCompatActivity {
    * add the
    */
   SignInButton signIn;
+  static GoogleSignInAccount account;
+
   @Override
   protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -50,7 +52,7 @@ public class SignInActivity extends AppCompatActivity {
     if(requestCode== REQUEST_CODE){
       try {
         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
-        GoogleSignInAccount account = task.getResult(ApiException.class);
+         account = task.getResult(ApiException.class);
         ScoutLogStetho.getInstance().setAccount(account);
       } catch (ApiException e) {
         //e.printStackTrace();

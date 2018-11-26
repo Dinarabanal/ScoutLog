@@ -6,7 +6,9 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Toast;
 import edu.cnm.deepdive.scoutlog.R;
+import edu.cnm.deepdive.scoutlog.ScoutLogStetho;
 
 /**
  * The type Main activity.
@@ -18,6 +20,8 @@ public class MainActivity extends AppCompatActivity {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_main);
     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new MainFragment()).commit();
+    String greeting = "Hello, " + ScoutLogStetho.getInstance().getAccount().getDisplayName()+"!";
+    Toast.makeText(this, greeting, Toast.LENGTH_SHORT).show();
 
     }
   private void switchFragment(Fragment fragment, boolean useStack, String variant) {
