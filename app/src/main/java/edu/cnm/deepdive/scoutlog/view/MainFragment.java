@@ -9,13 +9,14 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import de.hdodenhof.circleimageview.CircleImageView;
 import edu.cnm.deepdive.scoutlog.R;
 
 
 public class MainFragment extends Fragment{
 
-  private ImageButton scoutButton;
-  private ImageButton badgeButton;
+  private CircleImageView scoutButton;
+  private CircleImageView badgeButton;
   private View view;
   private String apiKey;
 
