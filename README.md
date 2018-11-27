@@ -6,6 +6,7 @@ Future implimentation includes allowing the badge to be assigned to a scout. Als
 As irt expands, it would allow scouts insightto their development. It will also alllow parents access to the scout's progress. 
 It  would also allow communication within the troup. Adding mapping features and trip planning.
 
-This was inspired more than 10 years ago when one of my newphews started scouts. the journey was exciting for him and cumbersome
-for my sister. She had to remeber what he was exploring. He had to keep track of badges aquired and which were going to keep
-him on track.
+This was inspired more than 10 years ago when one of my newphews started scouts. the journey was exciting for him and cumbersome for my sister. She had to remeber what he was exploring. He had to keep track of badges aquired and which were going to keep him on track.
+
+
+The app is userfriendly and a simple layout. Sign in with google and it takes you to the main screen. the scout button takes you to the scout database and and badges takes you to the images of badges.
