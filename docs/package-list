@@ -1,0 +1,5 @@
+edu.cnm.deepdive.scoutlog
+edu.cnm.deepdive.scoutlog.model.dao
+edu.cnm.deepdive.scoutlog.model.db
+edu.cnm.deepdive.scoutlog.model.entities
+edu.cnm.deepdive.scoutlog.view
