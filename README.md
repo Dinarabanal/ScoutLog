@@ -61,5 +61,5 @@ https://developer.android.com/guide/topics/ui/layout/recyclerview
 
 
 Java Docs
-[docs] (Java docs)
+[Java docs](docs)
 
