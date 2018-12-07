@@ -22,7 +22,6 @@ public class Badge {
   @ColumnInfo(name = "badge_name", collate = ColumnInfo.NOCASE)
   private String badgeName;
   @ColumnInfo(name = "image_link")
-
   private String imageLink;
 
   public long getId() {

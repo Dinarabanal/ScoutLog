@@ -9,11 +9,13 @@ import android.content.Context;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import edu.cnm.deepdive.scoutlog.model.dao.BadgeDao;
+import edu.cnm.deepdive.scoutlog.model.dao.ScoutBadgeJoinDao;
 import edu.cnm.deepdive.scoutlog.model.dao.ScoutDao;
 import edu.cnm.deepdive.scoutlog.model.entities.Badge;
 import edu.cnm.deepdive.scoutlog.model.entities.Scout;
+import edu.cnm.deepdive.scoutlog.model.entities.ScoutBadgeJoin;
 
-@Database(entities = {Scout.class, Badge.class},
+@Database(entities = {Scout.class, Badge.class, ScoutBadgeJoin.class},
     version = 1,
     exportSchema = true)
 public abstract class ScoutLogDatabase extends RoomDatabase {
@@ -43,6 +45,8 @@ public abstract class ScoutLogDatabase extends RoomDatabase {
   public abstract ScoutDao getScoutDao();
 
   public abstract BadgeDao getBadgeDao();
+
+  public abstract ScoutBadgeJoinDao getScoutBadgeJoin();
 
   private static class Callback extends RoomDatabase.Callback {
 

@@ -17,6 +17,8 @@ import android.widget.Toast;
 import edu.cnm.deepdive.scoutlog.R;
 import edu.cnm.deepdive.scoutlog.model.db.ScoutLogDatabase;
 import edu.cnm.deepdive.scoutlog.model.entities.Badge;
+import edu.cnm.deepdive.scoutlog.model.entities.Scout;
+import edu.cnm.deepdive.scoutlog.model.entities.ScoutBadgeJoin;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -36,12 +38,15 @@ public class BadgeFragment extends Fragment implements BadgeViewAdapter.ItemClic
   Badge badge = new Badge();
   EditText searchText;
   String badgeById = "";
+  long scoutId;
+  Scout scout;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
       Bundle bundle = getArguments();
+      scoutId = bundle.getLong("scout_id");
       Toast.makeText(getContext(), "Add badges to scout: " + bundle.getString("scout_name"),
           Toast.LENGTH_SHORT).show();
     }
@@ -67,16 +72,13 @@ public class BadgeFragment extends Fragment implements BadgeViewAdapter.ItemClic
     search.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-
         new QueryBadges().execute("%"+searchText.getText().toString()+"%");
-
-
       }
     });
+    if (scoutId != 0) {
+      new GetScout().execute(scoutId);
+    }
     return view;
-
-
-
   }
 
 
@@ -146,7 +148,6 @@ public class BadgeFragment extends Fragment implements BadgeViewAdapter.ItemClic
         Toast.makeText(getContext(), badge.getBadgeName(), Toast.LENGTH_SHORT).show();
       }
     }
-
     @Override
     protected Badge doInBackground(String... strings) {
 
@@ -159,12 +160,43 @@ public class BadgeFragment extends Fragment implements BadgeViewAdapter.ItemClic
 
     @Override
     protected void onPostExecute(Badge badge) {
+      if (BadgeFragment.this.scout != null) {
+        ScoutBadgeJoin scoutBadgeJoin = new ScoutBadgeJoin();
+        scoutBadgeJoin.setBadgeId(badge.getId());
+        scoutBadgeJoin.setScoutId(scout.getId());
+        String scoutBadgeToast = scout.getLastName() + " gets a " + badge.getBadgeName();
+        Toast.makeText(getContext(), scoutBadgeToast, Toast.LENGTH_SHORT).show();
+        new InsertScoutBadgeJoin().execute(scoutBadgeJoin);
+      } else {
         badgeById = badge.getBadgeName();
         Toast.makeText(getContext(), badgeById, Toast.LENGTH_SHORT).show();
+      }
     }
     @Override
     protected Badge doInBackground(Long... longs) {
       return ScoutLogDatabase.getInstance(getContext()).getBadgeDao().selectById(longs[0]);
+    }
+  }
+
+  private class GetScout extends AsyncTask<Long, Void, Scout> {
+
+    @Override
+    protected Scout doInBackground(Long... longs) {
+      return ScoutLogDatabase.getInstance(getContext()).getScoutDao().select(longs[0]);
+    }
+
+    @Override
+    protected void onPostExecute(Scout scout) {
+      BadgeFragment.this.scout = scout;
+    }
+  }
+
+  private class InsertScoutBadgeJoin extends AsyncTask<ScoutBadgeJoin, Void, Void> {
+
+    @Override
+    protected Void doInBackground(ScoutBadgeJoin... scoutBadgeJoins) {
+      ScoutLogDatabase.getInstance(getContext()).getScoutBadgeJoin().insert(scoutBadgeJoins[0]);
+      return null;
     }
   }
 

@@ -2,6 +2,7 @@ package edu.cnm.deepdive.scoutlog.view;
 
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
@@ -40,8 +41,6 @@ public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClic
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
-    new GetAllScouts().execute();
-
   }
 
   @Override
@@ -57,9 +56,13 @@ public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClic
         switchFragment(new AddScout(), true, "");
       }
     });
-
-
     return view;
+  }
+
+  @Override
+  public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    super.onViewCreated(view, savedInstanceState);
+    new GetAllScouts().execute();
   }
 
   private void initRecycler(View view){
@@ -76,6 +79,7 @@ public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClic
     Bundle bundle = new Bundle();
     String scoutName = scouts.get(position).getFirstName();
     bundle.putString("scout_name", scoutName);
+    bundle.putLong("scout_id", scouts.get(position).getId());
     BadgeFragment badgeFragment = new BadgeFragment();
     badgeFragment.setArguments(bundle);
     switchFragment(badgeFragment,true,"");
@@ -92,6 +96,7 @@ public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClic
       }
       initRecycler(view);
       recyclerView.setAdapter(adapter);
+      ScoutFragment.this.adapter.notifyDataSetChanged();
 
     }
 
