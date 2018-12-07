@@ -21,6 +21,7 @@ import edu.cnm.deepdive.scoutlog.R;
 import edu.cnm.deepdive.scoutlog.model.db.ScoutLogDatabase;
 import edu.cnm.deepdive.scoutlog.model.entities.Badge;
 import edu.cnm.deepdive.scoutlog.model.entities.Scout;
+import edu.cnm.deepdive.scoutlog.model.entities.ScoutBadgeJoin;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,9 +33,11 @@ public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClic
 
   private List<Long> ids;
   private List<Scout> scouts;
+  private List<ScoutBadgeJoin> joins;
   private ArrayList<String> scoutsInfo = new ArrayList<>();
   private View view;
   private ScoutViewAdapter adapter;
+  private List<Badge> badges = new ArrayList<>();
   private static final String TAG = "ScoutFragment";
   RecyclerView recyclerView;
 
@@ -91,18 +94,56 @@ public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClic
     protected void onPostExecute(List<Scout> scouts) {
 
       ScoutFragment.this.scouts = scouts;
-      for(Scout index : scouts){
-        scoutsInfo.add("First Name: " + index.getFirstName() + "\n" + "Last Name: " + index.getLastName() + "\n" + "Rank :" + index.getRank());
-      }
-      initRecycler(view);
-      recyclerView.setAdapter(adapter);
-      ScoutFragment.this.adapter.notifyDataSetChanged();
-
+      new GetAllBadges().execute();
     }
 
     @Override
     protected List<Scout> doInBackground(Void... voids) {
       return ScoutLogDatabase.getInstance(getContext()).getScoutDao().getAll();
+    }
+  }
+
+  private class GetAllBadges extends AsyncTask<Void, Void, List<Badge>> {
+
+    @Override
+    protected void onPostExecute(List<Badge> badges) {
+      super.onPostExecute(badges);
+      new ConnectTheBadges().execute();
+    }
+
+    @Override
+    protected List<Badge> doInBackground(Void... voids) {
+      return ScoutLogDatabase.getInstance(getContext()).getBadgeDao().getAllBadges();
+    }
+  }
+
+  private class ConnectTheBadges extends AsyncTask<Void,Void,Void> {
+
+    @Override
+    protected Void doInBackground(Void... voids) {
+      ScoutFragment.this.joins = ScoutLogDatabase.getInstance(getContext()).getScoutBadgeJoin().getScoutBadgeJoins();
+      return null;
+    }
+
+    @Override
+    protected void onPostExecute(Void aVoid) {
+      super.onPostExecute(aVoid);
+      for(Scout scout : ScoutFragment.this.scouts){
+        // this is just a quick example, will refactor; learning not to make super nested loops
+        String info = "First Name: " + scout.getFirstName() + "\n" + "Last Name: " + scout.getLastName() + "\n" + "Rank :" + scout.getRank();
+        for (Badge badge : ScoutFragment.this.badges) {
+          for (ScoutBadgeJoin scoutBadgeJoin : joins) {
+            if (scoutBadgeJoin.getScoutId() == scout.getId() && scoutBadgeJoin.getBadgeId() == badge.getId()) {
+              info = info + "\n" + badge.getBadgeName();
+            }
+          }
+        }
+        scoutsInfo.add(info);
+      }
+      initRecycler(view);
+      recyclerView.setAdapter(adapter);
+      ScoutFragment.this.adapter.notifyDataSetChanged();
+      ScoutFragment.this.badges = badges;
     }
   }
 

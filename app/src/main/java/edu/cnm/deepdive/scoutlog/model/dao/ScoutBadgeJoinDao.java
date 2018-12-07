@@ -18,5 +18,7 @@ public interface ScoutBadgeJoinDao {
      + "ON Badge.badge_id = scout_badge_join.badgeId WHERE scout_badge_join.scoutId=:scoutId")
   List<Badge> getBadgesForScout(long scoutId);
 
+ @Query("SELECT * FROM scout_badge_join")
+  List<ScoutBadgeJoin> getScoutBadgeJoins();
 
 }

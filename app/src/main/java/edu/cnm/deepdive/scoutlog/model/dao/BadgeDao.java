@@ -5,6 +5,7 @@ import android.arch.persistence.room.Insert;
 import android.arch.persistence.room.OnConflictStrategy;
 import android.arch.persistence.room.Query;
 import edu.cnm.deepdive.scoutlog.model.entities.Badge;
+import java.util.List;
 
 
 @Dao
@@ -12,6 +13,9 @@ import edu.cnm.deepdive.scoutlog.model.entities.Badge;
 public interface BadgeDao {
   @Insert (onConflict = OnConflictStrategy.FAIL)
  long insert (Badge badge);
+
+  @Query("SELECT * FROM Badge")
+ List<Badge> getAllBadges();
 
   @Query("SELECT * FROM Badge WHERE badge_name LIKE :badgeName")
   Badge select(String badgeName);
