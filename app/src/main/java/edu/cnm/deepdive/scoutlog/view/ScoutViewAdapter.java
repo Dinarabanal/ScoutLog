@@ -1,24 +1,28 @@
 package edu.cnm.deepdive.scoutlog.view;
 
+import android.app.AlertDialog;
+import android.app.AlertDialog.Builder;
 import android.content.Context;
-import android.opengl.GLException;
-import android.os.AsyncTask;
 import android.support.annotation.NonNull;
-import android.support.constraint.ConstraintLayout;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
+import com.squareup.picasso.Picasso;
+import de.hdodenhof.circleimageview.CircleImageView;
 import edu.cnm.deepdive.scoutlog.R;
-import edu.cnm.deepdive.scoutlog.model.db.ScoutLogDatabase;
-import edu.cnm.deepdive.scoutlog.model.entities.Scout;
-import edu.cnm.deepdive.scoutlog.view.BadgeViewAdapter.ItemClickListener;
+import edu.cnm.deepdive.scoutlog.model.entities.Badge;
+import edu.cnm.deepdive.scoutlog.model.entities.ScoutWithBadges;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * The type Scout view adapter.
@@ -27,24 +31,23 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
 
   private static final String TAG = "ScoutViewAdapter";
 
+  private Context context;
+  private ItemClickListener clickListener;
+  private ArrayList<ScoutWithBadges> scoutContents;
+  private Map<Long, List<Badge>> scoutsBadges;
+  private LayoutInflater inflater;
+
   /**
    * Instantiates a new Scout view adapter.
    *
    * @param scoutContents the scout contents
    * @param context the context
    */
-  public ScoutViewAdapter(ArrayList<String> scoutContents, Context context) {
+  public ScoutViewAdapter(ArrayList<ScoutWithBadges> scoutContents, Context context) {
     this.scoutContents = scoutContents;
     this.context = context;
+    this.inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
   }
-
-
-  private  ItemClickListener clickListener;
-  private ArrayList<String> scoutContents = new ArrayList<>();
-  private Context context;
-
-
-
 
   @NonNull
   @Override
@@ -57,7 +60,9 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
   @Override
   public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
     Log.d(TAG, "onBindViewHolder: started");
-    holder.scouts.setText(scoutContents.get(position));
+    holder.firstName.setText("First name: " + scoutContents.get(position).getScout().getFirstName());
+    holder.lastName.setText("Last name: " +scoutContents.get(position).getScout().getLastName());
+    holder.rank.setText("Rank : " + scoutContents.get(position).getScout().getRank());
   }
 
   @Override
@@ -73,11 +78,10 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
     /**
      * The Scouts.
      */
-    TextView scouts;
-    /**
-     * The Linear layout.
-     */
-    LinearLayout linearLayout;
+    TextView firstName;
+    TextView lastName;
+    TextView rank;
+    RecyclerView badges;
 
     /**
      * Instantiates a new View holder.
@@ -86,15 +90,28 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
      */
     public ViewHolder(View itemView) {
       super(itemView);
-      scouts = itemView.findViewById(R.id.scouts);
-      linearLayout = itemView.findViewById(R.id.recycled_scouts);
+      firstName = itemView.findViewById(R.id.li_scout_first_name);
+      lastName = itemView.findViewById(R.id.li_scout_last_name);
+      rank = itemView.findViewById(R.id.li_scout_rank);
       itemView.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
       if (clickListener != null) {
-        clickListener.onItemClick(view, getAdapterPosition());
+        AlertDialog.Builder builder = new Builder(context);
+        LinearLayout dialogView = (LinearLayout) inflater.inflate(R.layout.see_badges_layout, null);
+  //      RecyclerView badges = dialogView.findViewById(R.id.recycled_badges_for_scout);
+        Button addBadges = (Button) dialogView.findViewById(R.id.add_badge);
+        Button back = (Button) dialogView.findViewById(R.id.close);
+        for (Badge badge : scoutContents.get(getLayoutPosition()).getBadges()) {
+          CircleImageView badgeCircle = new CircleImageView(context);
+          Picasso.get().load(badge.getImageLink()).into(badgeCircle);
+          ((LinearLayout) dialogView.getChildAt(1)).addView(badgeCircle);
+        }
+        builder.setView(dialogView);
+        final AlertDialog dialog = builder.create();
+        dialog.show();
       }
     }
   }
@@ -106,9 +123,9 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
    * @return the item
    */
 // convenience method for getting data at click position
-  String getItem(int id) {
-    return scoutContents.get(id);
-  }
+//  int getItem(int id) {
+//    return scoutContents.get(position);
+//  }
 
   /**
    * Sets click listener.
