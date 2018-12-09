@@ -3,11 +3,7 @@ package edu.cnm.deepdive.scoutlog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.View;
 import android.widget.Toast;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -42,7 +38,7 @@ public class SignInActivity extends AppCompatActivity {
     super.onStart();
     GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
     if(account != null){
-      ScoutLogStetho.getInstance().setAccount(account);
+      ScoutLogApplication.getInstance().setAccount(account);
       switchToMain();
     }
   }
@@ -53,7 +49,7 @@ public class SignInActivity extends AppCompatActivity {
       try {
         Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(data);
          account = task.getResult(ApiException.class);
-        ScoutLogStetho.getInstance().setAccount(account);
+        ScoutLogApplication.getInstance().setAccount(account);
       } catch (ApiException e) {
         //e.printStackTrace();
         Toast.makeText(this,"There was a error logging in", Toast.LENGTH_LONG).show();
@@ -64,7 +60,7 @@ public class SignInActivity extends AppCompatActivity {
 
 
   private void signin(){
-    Intent intent = ScoutLogStetho.getInstance().getClient().getSignInIntent();
+    Intent intent = ScoutLogApplication.getInstance().getClient().getSignInIntent();
     startActivityForResult(intent, REQUEST_CODE);
   }
 

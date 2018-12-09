@@ -32,9 +32,7 @@
     app:layout_constraintRight_toRightOf="@id/recycled_badges"
     app:layout_constraintTop_toTopOf="@id/recycled_badges"
     app:layout_constraintBottom_toBottomOf="@id/recycled_badges"
-    android:background="#000"
-
-    />
+    android:background="#000"/>
   <android.support.v7.widget.RecyclerView
     android:id="@+id/recycled_badges"
     android:layout_height="wrap_content"
@@ -43,9 +41,7 @@
     app:layout_constraintTop_toBottomOf="@id/badge_search"
     android:paddingLeft="28dp"
     app:layout_constraintBottom_toBottomOf="parent"
-    app:layout_constraintLeft_toLeftOf="parent"
-
-    />
+    app:layout_constraintLeft_toLeftOf="parent"/>
 
 
 

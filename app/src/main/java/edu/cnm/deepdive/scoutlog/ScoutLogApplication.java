@@ -12,8 +12,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
  * The type Scout log stetho.
  * I heard different stories about removing thhis but I left it in because I dont want to break my app.
  */
-public class ScoutLogStetho extends Application {
-  private static ScoutLogStetho instance = null;
+public class ScoutLogApplication extends Application {
+  private static ScoutLogApplication instance = null;
 
   private GoogleSignInClient client;
   private GoogleSignInAccount account;
@@ -36,7 +36,7 @@ public class ScoutLogStetho extends Application {
    *
    * @return the instance
    */
-  public static ScoutLogStetho getInstance() {
+  public static ScoutLogApplication getInstance() {
     return instance;
   }
 

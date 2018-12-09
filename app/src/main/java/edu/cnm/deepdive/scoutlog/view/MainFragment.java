@@ -40,7 +40,7 @@ public class MainFragment extends Fragment{
       @Override
       public void onClick(View v) {
         switchFragment(new ScoutFragment(), true,"");
-    }
+      }
     });
     badgeButton = view.findViewById(R.id.badge_button);
     badgeButton.setOnClickListener(new OnClickListener() {

@@ -3,6 +3,8 @@ package edu.cnm.deepdive.scoutlog.view;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -95,6 +97,24 @@ public class AddScout extends Fragment {
             return ScoutLogDatabase.getInstance(getContext()).getScoutDao().insert(scouts[0]);
         }
 
+        @Override
+        protected void onPostExecute(Long aLong) {
+            switchFragment(new ScoutFragment(), true,"");
+        }
+    }
+
+    public void switchFragment(Fragment fragment, boolean useStack, String variant) {
+        FragmentManager manager = getFragmentManager();
+        String tag = fragment.getClass().getSimpleName() + ((variant != null) ? variant : "");
+        if (manager.findFragmentByTag(tag) != null) {
+            manager.popBackStackImmediate(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+        }
+        FragmentTransaction transaction = manager.beginTransaction();
+        transaction.replace(R.id.fragment_container, fragment, tag);
+        if (useStack) {
+            transaction.addToBackStack(tag);
+        }
+        transaction.commit();
     }
 
 }

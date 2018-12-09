@@ -34,5 +34,7 @@ public interface ScoutDao {
 
   @Delete
   void delete(Scout Scout);
+
+
 }
 

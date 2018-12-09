@@ -4,6 +4,7 @@ import android.arch.persistence.room.ColumnInfo;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Index;
 import android.arch.persistence.room.PrimaryKey;
+import android.arch.persistence.room.Relation;
 import android.support.annotation.NonNull;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,7 +12,6 @@ import java.util.List;
 @Entity(indices = {@Index(value =
     {"last_name", "first_name"}, unique = true)
 })
-
 public class Scout {
 
   // @Entity(primaryKeys = {"firstName", "lastName"})
@@ -32,10 +32,6 @@ public class Scout {
   //@NonNull
   @ColumnInfo(index = true)
   private String rank;
-//  @ColumnInfo(index = true)
-//  private List<Badge> badges;
-
-
 
   public void setFullName(@NonNull String firstName, @NonNull String lastName) {
     this.firstName = firstName;
@@ -76,5 +72,6 @@ public class Scout {
   public void setRank(@NonNull String rank) {
     this.rank = rank;
   }
+
 }
 

@@ -195,7 +195,7 @@ public class BadgeFragment extends Fragment implements BadgeViewAdapter.ItemClic
 
     @Override
     protected Void doInBackground(ScoutBadgeJoin... scoutBadgeJoins) {
-      ScoutLogDatabase.getInstance(getContext()).getScoutBadgeJoin().insert(scoutBadgeJoins[0]);
+      ScoutLogDatabase.getInstance(getContext()).getScoutBadgeJoinDao().insert(scoutBadgeJoins[0]);
       return null;
     }
   }
