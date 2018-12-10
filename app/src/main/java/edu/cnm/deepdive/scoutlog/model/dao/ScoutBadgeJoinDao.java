@@ -11,11 +11,12 @@ import java.util.List;
 
 @Dao
 public interface ScoutBadgeJoinDao {
+
   @Insert(onConflict = OnConflictStrategy.IGNORE)
   void insert(ScoutBadgeJoin scoutBadgeJoin);
 
- @Query("SELECT * FROM Badge INNER JOIN scout_badge_join "
-     + "ON Badge.badge_id = scout_badge_join.badgeId WHERE scout_badge_join.scoutId=:scoutId")
+ @Query("SELECT Badge.* FROM Badge INNER JOIN scout_badge_join "
+     + "ON Badge.badge_id = scout_badge_join.badge_id WHERE scout_badge_join.scout_id=:scoutId")
   List<Badge> getBadgesForScout(long scoutId);
 
  @Query("SELECT * FROM scout_badge_join")

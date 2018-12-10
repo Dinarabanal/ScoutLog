@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.scoutlog.view;
 
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -13,21 +14,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import edu.cnm.deepdive.scoutlog.MainActivity;
 import edu.cnm.deepdive.scoutlog.R;
+import edu.cnm.deepdive.scoutlog.model.db.ScoutLogDatabase;
 import edu.cnm.deepdive.scoutlog.model.entities.Scout;
 import edu.cnm.deepdive.scoutlog.model.entities.ScoutWithBadges;
 import java.util.ArrayList;
+import java.util.List;
 
 
 /**
  * The type Scout fragment.
  */
-public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClickListener {
+public class ScoutFragment extends Fragment  {
+
+  private static final String TAG = "ScoutFragment";
 
   private View view;
   private ScoutViewAdapter adapter;
-  private static final String TAG = "ScoutFragment";
-  RecyclerView recyclerView;
+  private RecyclerView recyclerView;
+  private List<Scout> scouts;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -39,64 +45,66 @@ public class ScoutFragment extends Fragment implements ScoutViewAdapter.ItemClic
       Bundle savedInstanceState) {
     // Inflate the layout for this fragment
     view = inflater.inflate(R.layout.fragment_scouts, container, false);
-    getFragmentManager().beginTransaction().replace(R.id.fragment_container, new ScoutFragment());
+    recyclerView = view.findViewById(R.id.recycled_scouts);
     FloatingActionButton fab = view.findViewById(R.id.add_scout);
     fab.setOnClickListener(new OnClickListener() {
       @Override
       public void onClick(View v) {
-        switchFragment(new AddScout(), true, "");
+//        switchFragment(new AddScout(), true, "");
       }
     });
-    initRecycler(view);
     return view;
   }
 
   @Override
   public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
     super.onViewCreated(view, savedInstanceState);
+    new GetAllScouts().execute();
   }
 
-  private void initRecycler(View view) {
-    recyclerView = view.findViewById(R.id.recycled_scouts);
-    recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-    adapter = new ScoutViewAdapter((ArrayList<ScoutWithBadges>) MainActivity.scouts, getContext());
+  private void initRecycler() {
+    adapter = new ScoutViewAdapter(scouts, getContext());
     recyclerView.setAdapter(adapter);
-    adapter.setClickListener(this);
     adapter.notifyDataSetChanged();
   }
 
-  @Override
-  public void onItemClick(View view, int position) {
-    Bundle bundle = new Bundle();
-    String scoutName = MainActivity.scouts.get(position).getScout().getFirstName();
-    bundle.putString("scout_name", scoutName);
-    bundle.putLong("scout_id", MainActivity.scouts.get(position).getScout().getId());
-    BadgeFragment badgeFragment = new BadgeFragment();
-    badgeFragment.setArguments(bundle);
-    switchFragment(badgeFragment, true, "");
-  }
+
+//  /**
+//   * Switch fragment.
+//   *
+//   * @param fragment the fragment
+//   * @param useStack the use stack
+//   * @param variant the variant switches between fragments with goiing bcak to the main activity
+//   */
+//  public void switchFragment(Fragment fragment, boolean useStack, String variant) {
+//    FragmentManager manager = getFragmentManager();
+//    String tag = fragment.getClass().getSimpleName() + ((variant != null) ? variant : "");
+//    if (manager.findFragmentByTag(tag) != null) {
+//      manager.popBackStackImmediate(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+//    }
+//    FragmentTransaction transaction = manager.beginTransaction();
+//    transaction.replace(R.id.fragment_container, fragment, tag);
+//    if (useStack) {
+//      transaction.addToBackStack(tag);
+//    }
+//    transaction.commit();
+//    ((MainActivity) getActivity()).updateData();
+//  }
 
 
-  /**
-   * Switch fragment.
-   *
-   * @param fragment the fragment
-   * @param useStack the use stack
-   * @param variant the variant switches between fragments with goiing bcak to the main activity
-   */
-  public void switchFragment(Fragment fragment, boolean useStack, String variant) {
-    FragmentManager manager = getFragmentManager();
-    String tag = fragment.getClass().getSimpleName() + ((variant != null) ? variant : "");
-    if (manager.findFragmentByTag(tag) != null) {
-      manager.popBackStackImmediate(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+  private class GetAllScouts extends AsyncTask<Void, Void, List<Scout>> {
+
+    @Override
+    protected void onPostExecute(List<Scout> scouts) {
+      ScoutFragment.this.scouts = new ArrayList<>(scouts);
+      initRecycler();
     }
-    FragmentTransaction transaction = manager.beginTransaction();
-    transaction.replace(R.id.fragment_container, fragment, tag);
-    if (useStack) {
-      transaction.addToBackStack(tag);
+
+    @Override
+    protected List<Scout> doInBackground(Void... voids) {
+      return ScoutLogDatabase.getInstance(getContext()).getScoutDao().getAll();
     }
-    transaction.commit();
-    ((MainActivity) getActivity()).updateData();
+
   }
 
 

@@ -11,7 +11,7 @@
     android:name=".ScoutLogApplication"
     android:supportsRtl="true"
     android:theme="@style/AppTheme">
-    <activity android:name=".view.MainActivity">
+    <activity android:name=".MainActivity">
 
     </activity>
     <activity
