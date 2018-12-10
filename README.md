@@ -13,6 +13,12 @@ Inspiration for designing the app began more than 10 years ago when my newphew s
 ### Instructions
 The app is userfriendly and a simple layout. Secure sign-in with Google Sign-in. Once signed in, the scout master has a list of scouts, an "Add a scout" button to add new scouts to the data-base.The badge button provides the name of the badge and, the ability to add a badge to a scout.
 
+### Instructions for build
+* 
+*
+*
+*
+
 ### ScoutLog/licenses
      
 implementation 'org.apache.commons:commons-csv:1.6'
