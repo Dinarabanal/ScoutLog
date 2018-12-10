@@ -1,19 +1,19 @@
 SCOUT LOG 1.0
 
-Inital Phase
+### Inital Phase
 Log in its inital phase is to help the scout master keep track of scouts and their badges. It allows an interactive 
 use of an app between the scout master, the scout and the badges. Badges are easy to identify and collect by their look as well as their name. Scouts and their ranking are avaiable to review as well as addinig new scouts.
 
-Application 1.1 and beyond
+### Application 1.1 and beyond
 Future implimentation includes adding requirements to each badge. As it expands, the app would allow scouts insight into their development. It will also allow parents access to the scout's progress. The app would also allow communication between scouts as well as within the troup orginization. additional features would include lat/long mapping features and trip planning.
 
-Why Scout Log
+### Why Scout Log
 Inspiration for designing the app began more than 10 years ago when my newphew started scouts. The journey was exciting for him and cumbersome for my sister. She had to remember what he was exploring and making sure he completed the requirements. There are web-based app that require interaction with the web app. This app is mobile with ultimate conectivity to the offical Scout website. It will provide paperless documentation needed by Boy Scouts of America.  
 
-Instructions
+### Instructions
 The app is userfriendly and a simple layout. Secure sign-in with Google Sign-in. Once signed in, the scout master has a list of scouts, an "Add a scout" button to add new scouts to the data-base.The badge button provides the name of the badge and, the ability to add a badge to a scout.
 
- ScoutLog/licenses
+### ScoutLog/licenses
      
 implementation 'org.apache.commons:commons-csv:1.6'
 implementation 'com.android.support:recyclerview-v7:27.1.1    
@@ -52,6 +52,6 @@ Wikipedia
 
 Boy Scouts of America (BSA)
 
-Java Docs
+### Java Docs
 [Java docs](docs)
 
