@@ -14,10 +14,11 @@ Inspiration for designing the app began more than 10 years ago when my newphew s
 The app is userfriendly and a simple layout. Secure sign-in with Google Sign-in. Once signed in, the scout master has a list of scouts, an "Add a scout" button to add new scouts to the data-base.The badge button provides the name of the badge and, the ability to add a badge to a scout.
 
 ### Instructions for build
-* 
-*
-*
-*
+* Clone/download the repository From github by coping the URL.
+* Import the project into an Integrated development environment(IDE) - Intellij IDEA.
+* Checkout from version control selecting "git".
+* Paste the URL and select a directory to save the project and clone the project.
+* Using Intellij, open project, build and the app should be reqady to continue.
 
 ### ScoutLog/licenses
      
