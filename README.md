@@ -23,7 +23,7 @@ The app is userfriendly and a simple layout. Secure sign-in with Google Sign-in.
 
 [wireFrame](https://xd.adobe.com/view/f3522612-c826-4301-671a-217fb8debcc1-8563/)
 
-[ERD]
+[ERD](ScoutLog ERD.pdf)
 
 ### ScoutLog/licenses
      
