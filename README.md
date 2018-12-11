@@ -1,5 +1,5 @@
 SCOUT LOG 1.0
-
+[License for ScoutLog](LICENSE)
 ### Inital Phase
 Log in its inital phase is to help the scout master keep track of scouts and their badges. It allows an interactive 
 use of an app between the scout master, the scout and the badges. Badges are easy to identify and collect by their look as well as their name. Scouts and their ranking are avaiable to review as well as addinig new scouts.
