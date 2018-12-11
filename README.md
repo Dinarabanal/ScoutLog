@@ -52,28 +52,18 @@ implementation 'android.arch.persistence.room:runtime:1.1.1'
 implementation 'de.hdodenhof:circleimageview:2.2.0'
 implementation 'com.google.android.gms:play-services-auth:16.0.1'
 
-Google
 
-Play Services API
-https://developers.google.com/android/guides/setup
 
-Google Services
-https://developers.google.com/terms/site-policies
 
 Circleimage view
-https://github.com/hdodenhof/CircleImageView
-
-Room
-https://developer.android.com/topic/libraries/architecture/room
+https://github.com/hdodenhof/CircleImageView/blob/master/LICENSE.txt
 
 Picasso
 http://square.github.io/picasso/
 
 Stetho
-facebook.github.io/stetho
+https://github.com/facebook/stetho/blob/master/LICENSE
 
-RecyclerView
-https://developer.android.com/guide/topics/ui/layout/recyclerview
 
 
 Wikipedia
