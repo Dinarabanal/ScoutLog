@@ -4,7 +4,9 @@ import android.app.AlertDialog;
 import android.app.AlertDialog.Builder;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -22,8 +24,6 @@ import edu.cnm.deepdive.scoutlog.R;
 import edu.cnm.deepdive.scoutlog.model.db.ScoutLogDatabase;
 import edu.cnm.deepdive.scoutlog.model.entities.Badge;
 import edu.cnm.deepdive.scoutlog.model.entities.Scout;
-import edu.cnm.deepdive.scoutlog.model.entities.ScoutWithBadges;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -33,20 +33,19 @@ import java.util.Map;
 public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.ViewHolder>{
 
   private static final String TAG = "ScoutViewAdapter";
-
   private Context context;
   private List<Scout> scouts;
   private Map<Long, List<Badge>> scoutsBadges;
   private LayoutInflater inflater;
-
+  private FragmentManager manager;
   /**
    * Instantiates a new Scout view adapter.
    *
    * @param scouts the scout contents
    * @param context the context
    */
-  public ScoutViewAdapter(List<Scout> scouts, Context context) {
-
+  public ScoutViewAdapter(List<Scout> scouts, Context context,FragmentManager manager) {
+    this.manager = manager;
     this.scouts = scouts;
     this.context = context;
     this.inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
@@ -71,23 +70,39 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
     return scouts.size();
   }
 
-  private void showBadges(List<Badge> badges){
+  private void showBadges(List<Badge> badges, long position){
     AlertDialog.Builder builder = new Builder(context);
     LinearLayout dialogView = (LinearLayout) inflater.inflate(R.layout.see_badges_layout, null);
     //      RecyclerView badges = dialogView.findViewById(R.id.recycled_badges_for_scout);
     Button addBadges = (Button) dialogView.findViewById(R.id.add_badge);
     Button back = (Button) dialogView.findViewById(R.id.close);
-    for (Badge badge : badges) {
-      CircleImageView badgeCircle = new CircleImageView(context);
-      Picasso.get().load(badge.getImageLink()).into(badgeCircle);
-      ((LinearLayout) dialogView.getChildAt(1)).addView(badgeCircle);
-    }
+
+
     builder.setView(dialogView);
     final AlertDialog dialog = builder.create();
     dialog.show();
+    back.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        dialog.cancel();
+      }
+    });
+    addBadges.setOnClickListener(new OnClickListener() {
+      @Override
+      public void onClick(View v) {
+        Bundle bundle = new Bundle();
+        bundle.putLong("id",scouts.get((int)position-1).getId());
+        bundle.putString("scout_name",scouts.get((int)position-1).getFirstName());
+        BadgeFragment badgeFragment = new BadgeFragment();
+        badgeFragment.setArguments(bundle);
+        manager.beginTransaction().replace(R.id.fragment_container, badgeFragment).commit();
+        dialog.cancel();
+      }
+    });
+
   }
 
-  /**
+  /**.
    * The type View holder.
    */
   public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -116,7 +131,7 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
 
     @Override
     public void onClick(View view) {
-      new QueryBadgesForScout(context).execute(scout.getId());
+      new QueryBadgesForScout(context,scout.getId()).execute(scout.getId());
     }
 
     public void bind(Scout scout) {
@@ -131,14 +146,16 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
   private class QueryBadgesForScout extends AsyncTask<Long,Void,List<Badge>> {
 
     private Context context;
+    private long position;
 
-    public QueryBadgesForScout(Context context) {
+    public QueryBadgesForScout(Context context, long position) {
       this.context = context;
+      this.position = position;
     }
 
     @Override
     protected void onPostExecute(List<Badge> badges) {
-      showBadges(badges);
+      showBadges(badges, position);
     }
 
     @Override

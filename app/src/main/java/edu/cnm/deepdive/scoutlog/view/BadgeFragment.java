@@ -29,6 +29,7 @@ import org.apache.commons.csv.CSVRecord;
 
 public class BadgeFragment extends Fragment implements BadgeViewAdapter.ItemClickListener{
 
+
   BadgeViewAdapter adapter;
 
   private static final String TAG = "BadgeFragment";
@@ -40,12 +41,13 @@ public class BadgeFragment extends Fragment implements BadgeViewAdapter.ItemClic
   String badgeById = "";
   long scoutId;
   Scout scout;
+  private Bundle bundle;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     if (getArguments() != null) {
-      Bundle bundle = getArguments();
+      bundle = getArguments();
       scoutId = bundle.getLong("scout_id");
       Toast.makeText(getContext(), "Add badges to scout: " + bundle.getString("scout_name"),
           Toast.LENGTH_SHORT).show();
@@ -84,6 +86,11 @@ public class BadgeFragment extends Fragment implements BadgeViewAdapter.ItemClic
 
   @Override
   public void onItemClick(View view, int position) {
+    ScoutBadgeJoin addAFrickenBadge = new ScoutBadgeJoin();
+    addAFrickenBadge.setScoutId(bundle.getLong("id"));
+    addAFrickenBadge.setBadgeId(position+1);
+    new InsertScoutBadgeJoin().execute(addAFrickenBadge);
+
     long x = position +1;
     new QueryById().execute(x);
   }

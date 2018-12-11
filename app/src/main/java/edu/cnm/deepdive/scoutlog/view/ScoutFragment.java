@@ -63,7 +63,7 @@ public class ScoutFragment extends Fragment  {
   }
 
   private void initRecycler() {
-    adapter = new ScoutViewAdapter(scouts, getContext());
+    adapter = new ScoutViewAdapter(scouts, getContext(),getFragmentManager());
     recyclerView.setAdapter(adapter);
     adapter.notifyDataSetChanged();
   }
