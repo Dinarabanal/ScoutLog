@@ -21,15 +21,15 @@ The app is userfriendly and a simple layout. Secure sign-in with Google Sign-in.
 * Using Intellij, open project, build and the app should be reqady to continue.
 ### WireFrames 
 
- <img src="Android Mobile – 2.png" alt="Smiley face" height="42" width="42"> 
+ <img src="Android Mobile – 1.png" alt="Smiley face" height="300" width="100"> 
 
-![](Android Mobile – 2.png)
+ <img src="Android Mobile – 2.png" alt="Smiley face" height="300" width="100"> 
 
-![](Android Mobile – 3.png)
+ <img src="Android Mobile – 3.png" alt="Smiley face" height="300" width="100"> 
 
-![](Android Mobile – 4.png)
+ <img src="Android Mobile – 4.png" alt="Smiley face" height="300" width="100"> 
 
-![](Android Mobile – 5.png)
+ <img src="Android Mobile – 5.png" alt="Smiley face" height="300" width="100"> 
 
 
 
