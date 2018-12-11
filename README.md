@@ -19,6 +19,19 @@ The app is userfriendly and a simple layout. Secure sign-in with Google Sign-in.
 * Checkout from version control selecting "git".
 * Paste the URL and select a directory to save the project and clone the project.
 * Using Intellij, open project, build and the app should be reqady to continue.
+### WireFrames 
+
+![](Android Mobile – 1.png)
+
+![](Android Mobile – 2.png)
+
+![](Android Mobile – 3.png)
+
+![](Android Mobile – 4.png)
+
+![](Android Mobile – 5.png)
+
+
 
 ### ScoutLog/licenses
      
@@ -42,7 +55,7 @@ https://developers.google.com/terms/site-policies
 Circleimage view
 https://github.com/hdodenhof/CircleImageView
 
-ROOM
+Room
 https://developer.android.com/topic/libraries/architecture/room
 
 Picasso
