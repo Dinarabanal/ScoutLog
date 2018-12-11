@@ -18,7 +18,7 @@ public class SignInActivity extends AppCompatActivity {
   private static final int REQUEST_CODE = 1010;
   /**
    * The Sign in.
-   * add the
+   * adds Google sign in
    */
   SignInButton signIn;
   static GoogleSignInAccount account;

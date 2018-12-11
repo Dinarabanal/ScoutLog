@@ -62,8 +62,8 @@
 
 
     <de.hdodenhof.circleimageview.CircleImageView
-      android:layout_width="60dp"
-      android:layout_height="60dp"
+      android:layout_width="48dp"
+      android:layout_height="48dp"
       android:src="@drawable/ic_add"
       android:id="@+id/save_button"
       app:layout_constraintBottom_toBottomOf="parent"

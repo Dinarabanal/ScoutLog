@@ -33,6 +33,7 @@
     app:layout_constraintTop_toTopOf="@id/recycled_badges"
     app:layout_constraintBottom_toBottomOf="@id/recycled_badges"
     android:background="#000"/>
+
   <android.support.v7.widget.RecyclerView
     android:id="@+id/recycled_badges"
     android:layout_height="wrap_content"

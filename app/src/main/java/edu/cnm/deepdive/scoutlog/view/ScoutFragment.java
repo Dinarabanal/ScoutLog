@@ -33,7 +33,7 @@ public class ScoutFragment extends Fragment  {
   private View view;
   private ScoutViewAdapter adapter;
   private RecyclerView recyclerView;
-  private List<Scout> scouts;
+  private List<ScoutWithBadges> scouts;
 
   @Override
   public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -48,9 +48,10 @@ public class ScoutFragment extends Fragment  {
     recyclerView = view.findViewById(R.id.recycled_scouts);
     FloatingActionButton fab = view.findViewById(R.id.add_scout);
     fab.setOnClickListener(new OnClickListener() {
+
       @Override
       public void onClick(View v) {
-//        switchFragment(new AddScout(), true, "");
+       switchFragment(new AddScout(), true, "");
       }
     });
     return view;
@@ -69,40 +70,40 @@ public class ScoutFragment extends Fragment  {
   }
 
 
-//  /**
-//   * Switch fragment.
-//   *
-//   * @param fragment the fragment
-//   * @param useStack the use stack
-//   * @param variant the variant switches between fragments with goiing bcak to the main activity
-//   */
-//  public void switchFragment(Fragment fragment, boolean useStack, String variant) {
-//    FragmentManager manager = getFragmentManager();
-//    String tag = fragment.getClass().getSimpleName() + ((variant != null) ? variant : "");
-//    if (manager.findFragmentByTag(tag) != null) {
-//      manager.popBackStackImmediate(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
-//    }
-//    FragmentTransaction transaction = manager.beginTransaction();
-//    transaction.replace(R.id.fragment_container, fragment, tag);
-//    if (useStack) {
-//      transaction.addToBackStack(tag);
-//    }
-//    transaction.commit();
-//    ((MainActivity) getActivity()).updateData();
-//  }
+  /**
+   * Switch fragment.
+   *
+   * @param fragment the fragment
+   * @param useStack the use stack
+   * @param variant the variant switches between fragments with goiing bcak to the main activity
+   */
+  public void switchFragment(Fragment fragment, boolean useStack, String variant) {
+    FragmentManager manager = getFragmentManager();
+    String tag = fragment.getClass().getSimpleName() + ((variant != null) ? variant : "");
+    if (manager.findFragmentByTag(tag) != null) {
+      manager.popBackStackImmediate(tag, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+    }
+    FragmentTransaction transaction = manager.beginTransaction();
+    transaction.replace(R.id.fragment_container, fragment, tag);
+    if (useStack) {
+      transaction.addToBackStack(tag);
+    }
+    transaction.commit();
+  //  ((MainActivity) getActivity()).updateData();
+  }
 
 
-  private class GetAllScouts extends AsyncTask<Void, Void, List<Scout>> {
+  private class GetAllScouts extends AsyncTask<Void, Void, List<ScoutWithBadges>> {
 
     @Override
-    protected void onPostExecute(List<Scout> scouts) {
+    protected void onPostExecute(List<ScoutWithBadges> scouts) {
       ScoutFragment.this.scouts = new ArrayList<>(scouts);
       initRecycler();
     }
 
     @Override
-    protected List<Scout> doInBackground(Void... voids) {
-      return ScoutLogDatabase.getInstance(getContext()).getScoutDao().getAll();
+    protected List<ScoutWithBadges> doInBackground(Void... voids) {
+      return ScoutLogDatabase.getInstance(getContext()).getScoutBadgeDao().getAllScoutsAndBadges();
     }
 
   }

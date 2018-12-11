@@ -10,7 +10,7 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 /**
  * The type Scout log stetho.
- * I heard different stories about removing thhis but I left it in because I dont want to break my app.
+ * I heard different stories about removing this but I left it in because I don't want to break my app.
  */
 public class ScoutLogApplication extends Application {
   private static ScoutLogApplication instance = null;
@@ -26,7 +26,6 @@ public class ScoutLogApplication extends Application {
     GoogleSignInOptions options = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
         .requestEmail()
         .requestId()
-        // Include requestIdToken if we're using Google Sign-in for authenticating on a back-end server.
         .build();
     client = GoogleSignIn.getClient(this, options);
   }

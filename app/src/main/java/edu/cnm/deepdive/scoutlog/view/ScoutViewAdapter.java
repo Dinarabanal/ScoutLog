@@ -24,6 +24,7 @@ import edu.cnm.deepdive.scoutlog.R;
 import edu.cnm.deepdive.scoutlog.model.db.ScoutLogDatabase;
 import edu.cnm.deepdive.scoutlog.model.entities.Badge;
 import edu.cnm.deepdive.scoutlog.model.entities.Scout;
+import edu.cnm.deepdive.scoutlog.model.entities.ScoutWithBadges;
 import java.util.List;
 import java.util.Map;
 
@@ -34,7 +35,7 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
 
   private static final String TAG = "ScoutViewAdapter";
   private Context context;
-  private List<Scout> scouts;
+  private List<ScoutWithBadges> scouts;
   private Map<Long, List<Badge>> scoutsBadges;
   private LayoutInflater inflater;
   private FragmentManager manager;
@@ -44,11 +45,11 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
    * @param scouts the scout contents
    * @param context the context
    */
-  public ScoutViewAdapter(List<Scout> scouts, Context context,FragmentManager manager) {
+  public ScoutViewAdapter(List<ScoutWithBadges> scouts, Context context,FragmentManager manager) {
     this.manager = manager;
     this.scouts = scouts;
     this.context = context;
-    this.inflater = (LayoutInflater) context.getSystemService(context.LAYOUT_INFLATER_SERVICE);
+    this.inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
   }
 
   @NonNull
@@ -73,10 +74,22 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
   private void showBadges(List<Badge> badges, long position){
     AlertDialog.Builder builder = new Builder(context);
     LinearLayout dialogView = (LinearLayout) inflater.inflate(R.layout.see_badges_layout, null);
-    //      RecyclerView badges = dialogView.findViewById(R.id.recycled_badges_for_scout);
-    Button addBadges = (Button) dialogView.findViewById(R.id.add_badge);
-    Button back = (Button) dialogView.findViewById(R.id.close);
-
+    //RecyclerView badges = dialogView.findViewById(R.id.recycled_badges_for_scout);
+    Button addBadges = dialogView.findViewById(R.id.add_badge);
+    Button back = dialogView.findViewById(R.id.close);
+    TextView scoutTitle = dialogView.findViewById(R.id.textview);
+    ScoutWithBadges scout = scouts.get((int)position-1);
+    scoutTitle.setText(scout.getScout().getFirstName() + " " + scout.getScout().getLastName() + " Badges");
+    LinearLayout badgeImageLayout = dialogView.findViewById(R.id.scout_recycled_badges);
+    LinearLayout view =  dialogView.findViewById(R.id.scout_recycled_badges);
+    for (int i = 0; i < badges.size() && i < 16; i++){
+      LinearLayout imageView = (LinearLayout) ((LinearLayout) view.getChildAt(i / 4)).getChildAt(i % 4);
+      CircleImageView civ = (CircleImageView) imageView.getChildAt(0);
+      // Possibly add the names of badges
+//      TextView text = (TextView) imageView.getChildAt(1);
+//      text.setText(badges.get(i).getBadgeName());
+      Picasso.get().load(badges.get(i).getImageLink()).into(civ);
+    }
 
     builder.setView(dialogView);
     final AlertDialog dialog = builder.create();
@@ -91,11 +104,11 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
       @Override
       public void onClick(View v) {
         Bundle bundle = new Bundle();
-        bundle.putLong("id",scouts.get((int)position-1).getId());
-        bundle.putString("scout_name",scouts.get((int)position-1).getFirstName());
+        bundle.putLong("id",scouts.get((int)position-1).getScout().getId());
+        bundle.putString("scout_name",scouts.get((int)position-1).getScout().getFirstName());
         BadgeFragment badgeFragment = new BadgeFragment();
         badgeFragment.setArguments(bundle);
-        manager.beginTransaction().replace(R.id.fragment_container, badgeFragment).commit();
+        manager.beginTransaction().replace(R.id.fragment_container, badgeFragment).addToBackStack(null).commit();
         dialog.cancel();
       }
     });
@@ -110,7 +123,7 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
     /**
      * The Scouts.
      */
-    Scout scout;
+    ScoutWithBadges scout;
     TextView firstName;
     TextView lastName;
     TextView rank;
@@ -131,14 +144,14 @@ public class ScoutViewAdapter extends RecyclerView.Adapter<ScoutViewAdapter.View
 
     @Override
     public void onClick(View view) {
-      new QueryBadgesForScout(context,scout.getId()).execute(scout.getId());
+      new QueryBadgesForScout(context,scout.getScout().getId()).execute(scout.getScout().getId());
     }
 
-    public void bind(Scout scout) {
+    public void bind(ScoutWithBadges scout) {
       this.scout = scout;
-      firstName.setText("First name: " + scout.getFirstName());
-      lastName.setText("Last name: " +scout.getLastName());
-      rank.setText("Rank : " + scout.getRank());
+      firstName.setText("First name: " + scout.getScout().getFirstName());
+      lastName.setText("Last name: " +scout.getScout().getLastName());
+      rank.setText("Rank : " + scout.getScout().getRank());
 
     }
   }

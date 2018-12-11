@@ -27,19 +27,46 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 
 
+/**
+ * The type Badge fragment.
+ */
 public class BadgeFragment extends Fragment implements BadgeViewAdapter.ItemClickListener{
 
 
+  /**
+   * The Adapter.
+   */
   BadgeViewAdapter adapter;
 
   private static final String TAG = "BadgeFragment";
 
+  /**
+   * The Images.
+   */
   ArrayList<String> images = new ArrayList<>();
+  /**
+   * The Search.
+   */
   Button search;
+  /**
+   * The Badge.
+   */
   Badge badge = new Badge();
+  /**
+   * The Search text.
+   */
   EditText searchText;
+  /**
+   * The Badge by id.
+   */
   String badgeById = "";
+  /**
+   * The Scout id.
+   */
   long scoutId;
+  /**
+   * The Scout.
+   */
   Scout scout;
   private Bundle bundle;
 
@@ -86,10 +113,10 @@ public class BadgeFragment extends Fragment implements BadgeViewAdapter.ItemClic
 
   @Override
   public void onItemClick(View view, int position) {
-    ScoutBadgeJoin addAFrickenBadge = new ScoutBadgeJoin();
-    addAFrickenBadge.setScoutId(bundle.getLong("id"));
-    addAFrickenBadge.setBadgeId(position+1);
-    new InsertScoutBadgeJoin().execute(addAFrickenBadge);
+    ScoutBadgeJoin addABadge = new ScoutBadgeJoin();
+    addABadge.setScoutId(bundle.getLong("id"));
+    addABadge.setBadgeId(position+1);
+    new InsertScoutBadgeJoin().execute(addABadge);
 
     long x = position +1;
     new QueryById().execute(x);
