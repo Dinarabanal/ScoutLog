@@ -21,17 +21,9 @@ The app is userfriendly and a simple layout. Secure sign-in with Google Sign-in.
 * Using Intellij, open project, build and the app should be reqady to continue.
 ### WireFrames 
 
- <img src="Android Mobile – 1.png" alt="Smiley face" height="300" width="100"> 
+[wireFrame](https://xd.adobe.com/view/f3522612-c826-4301-671a-217fb8debcc1-8563/)
 
- <img src="Android Mobile – 2.png" alt="Smiley face" height="300" width="100"> 
-
- <img src="Android Mobile – 3.png" alt="Smiley face" height="300" width="100"> 
-
- <img src="Android Mobile – 4.png" alt="Smiley face" height="300" width="100"> 
-
- <img src="Android Mobile – 5.png" alt="Smiley face" height="300" width="100"> 
-
-
+[ERD]
 
 ### ScoutLog/licenses
      
